@@ -12,6 +12,8 @@ import os
 from openai import OpenAI
 import io
 from PIL import Image
+import json
+import re
 
 app = FastAPI(
     title="BlackJack Helper API",
@@ -20,9 +22,10 @@ app = FastAPI(
 )
 
 # Configure CORS for mobile app access
+# Note: In production, replace "*" with specific allowed origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=["*"],  # TODO: Configure specific origins for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -160,9 +163,6 @@ If you cannot clearly identify any cards, return empty arrays for player_cards a
         result_text = response.choices[0].message.content
         
         # Extract JSON from the response (GPT-4 might add explanation text)
-        import json
-        import re
-        
         # Try to find JSON in the response
         json_match = re.search(r'\{[\s\S]*\}', result_text)
         if json_match:

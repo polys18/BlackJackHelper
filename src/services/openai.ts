@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { Card, CardClassificationResult } from '../types';
+import { Card, CardClassificationResult, CardRank, CardSuit } from '../types';
 import RNFS from 'react-native-fs';
 
 export class OpenAIVisionService {
@@ -107,10 +107,22 @@ Respond in this exact JSON format:
   }
 
   private createCard(rank: string, suit: string): Card {
+    // Validate rank
+    const validRanks: CardRank[] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    if (!validRanks.includes(rank as CardRank)) {
+      throw new Error(`Invalid card rank: ${rank}`);
+    }
+
+    // Validate suit
+    const validSuits: CardSuit[] = ['hearts', 'diamonds', 'clubs', 'spades'];
+    if (!validSuits.includes(suit as CardSuit)) {
+      throw new Error(`Invalid card suit: ${suit}`);
+    }
+
     const cardValue = this.getCardValue(rank);
     return {
-      rank: rank as any,
-      suit: suit as any,
+      rank: rank as CardRank,
+      suit: suit as CardSuit,
       value: cardValue,
     };
   }

@@ -163,9 +163,9 @@ I hardcoded the blackjeck stratergy tables and the cards that are read, are then
 
 ## AI/LLM tool integration
 
-- I used copilot to get the first simple version
-- OpenAI for card classification
-- Cursor for writing other code
+- I used copilot to get the first simple version. This was awesome since it gave a really good sceleton of the project.
+- OpenAI for card classification. This is slower than I want, I want to find ways around it so i ccan eventually hit the API with multiple frames (one every second)
+- Cursor for writing other code. This is always reliable and a good helper.
 
 ## Some screenshots 
 

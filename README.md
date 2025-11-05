@@ -133,7 +133,7 @@ if result["success"]:
 
 ## Testing
 
-(The tests currently failed because they were written for the first version but I have updated it snce then. I have to update the tests.)
+(The tests currently fail because they were written for the first version but I have updated it snce then. I have to update the tests.)
 
 Run the test suite:
 ```bash
@@ -151,7 +151,7 @@ The API is built with:
 
 ## Strategy Recommendations
 
-I hardcoded the blackjeck stratergy tables and teh cards that arae read are then used to prompt the strategy dictionries to get the best move.
+I hardcoded the blackjeck stratergy tables and the cards that are read, are then used to prompt the strategy dictionaries to get the best move.
 
 ## Future Enhancements
 

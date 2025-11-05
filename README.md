@@ -169,7 +169,7 @@ I hardcoded the blackjeck stratergy tables and teh cards that arae read are then
 
 ## Some screenshots 
 
-![Alt text]("Screenshot 2025-11-04 at 7.11.22 PM.png")
-![Alt text]("Screenshot 2025-11-04 at 7.12.20 PM.png")
-![Alt text]("IMG_3072.jpeg")
-![Alt text]("Screenshot 2025-11-04 at 7.32.50 PM.png")
+![Alt text](api_screen.png)
+![Alt text](terminal_screen.png)
+![Alt text](IMG_3072.jpeg)
+![Alt text](Jira_screen.png)

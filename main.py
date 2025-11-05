@@ -84,23 +84,120 @@ def calculate_hand_value(cards: List[Card]) -> int:
     
     return total
 
+def get_strategy(d, p1, p2, player_total):
+    hard_totals = {
+        (5, d): 'H' for d in range(2, 12)
+    } | {
+        (6, d): 'H' for d in range(2, 12)
+    } | {
+        (7, d): 'H' for d in range(2, 12)
+    } | {
+        (8, d): 'H' for d in range(2, 12)
+    } | {
+        (9, d): 'D' if d in [3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (10, d): 'D' if d not in [10, 11] else 'H' for d in range(2, 12)
+    } | {
+        (11, d): 'D' for d in range(2, 12)
+    } | {
+        (12, d): 'S' if d in [4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (13, d): 'S' if d in [2, 3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (14, d): 'S' if d in [2, 3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (15, d): 'S' if d in [2, 3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (16, d): 'S' if d in [2, 3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (17, d): 'S' for d in range(2, 12)
+    } | {
+        (18, d): 'S' for d in range(2, 12)
+    } | {
+        (19, d): 'S' for d in range(2, 12)
+    }
 
-def get_recommendation(player_total: int, dealer_visible_card: Optional[Card]) -> str:
+    soft_totals = {
+        ('A,2', d): 'D' if d in [5, 6] else 'H' for d in range(2, 12)
+    } | {
+        ('A,3', d): 'D' if d in [5, 6] else 'H' for d in range(2, 12)
+    } | {
+        ('A,4', d): 'D' if d in [4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        ('A,5', d): 'D' if d in [4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        ('A,6', d): 'D' if d in [3, 4, 5, 6] else 'H' for d in range(2, 12)
+    } | {
+        ('A,7', d): 'D' if d in [2, 3, 4, 5, 6] else ('S' if d in [7, 8] else 'H') for d in range(2, 12)
+    } | {
+        ('A,8', d): 'D' if d == 6 else 'S' for d in range(2, 12)
+    } | {
+        ('A,9', d): 'S' for d in range(2, 12)
+    }
+
+    pairs = {
+        (2, 2, d): 'SP' if d in [2, 3, 4, 5, 6, 7] else 'H' for d in range(2, 12)
+    } | {
+        (3, 3, d): 'SP' if d in [2, 3, 4, 5, 6, 7] else 'H' for d in range(2, 12)
+    } | {
+        (4, 4, d): 'SP' if d in [5, 6] else 'H' for d in range(2, 12)
+    } | {
+        (5, 5, d): 'D' if d in [2, 3, 4, 5, 6, 7, 8, 9] else 'H' for d in range(2, 12)
+    } | {
+        (6, 6, d): 'SP' if d in [2, 3, 4, 5, 6] else ('H' if d in [7, 8, 9, 10, 11] else 'SP') for d in range(2, 12)
+    } | {
+        (7, 7, d): 'SP' if d in [2, 3, 4, 5, 6, 7] else 'H' for d in range(2, 12)
+    } | {
+        (8, 8, d): 'SP' for d in range(2, 12)
+    } | {
+        (9, 9, d): 'SP' if d in [2, 3, 4, 5, 6, 8, 9] else 'S' for d in range(2, 12)
+    } | {
+        (10, 10, d): 'S' for d in range(2, 12)
+    } | {
+        ('A', 'A', d): 'SP' for d in range(2, 12)
+    }
+
+    if p1 == 'A':
+        p1 = '11'
+    if p2 == 'A':
+        p2 = '11'
+    if d == 'A':
+        d = '11'
+
+    if p1 == 'J' or p1 == 'Q' or p1 == 'K':
+        p1 = '10'
+    if p2 == 'J' or p2 == 'Q' or p2 == 'K':
+        p2 = '10'
+    if d == 'J' or d == 'Q' or d == 'K':
+        d = '10'
+
+
+    
+    if p1 == '11' or p2 == '11':
+        if p1 != '11':
+            return soft_totals[("A," + p1, int(d))]
+        elif p2 != '11':
+            return soft_totals[("A," + p2, int(d))]
+        else:
+            return pairs[('A', 'A', int(d))]
+    elif p1 == p2:
+        return pairs[(int(p1), int(p2), int(d))]
+    else:
+        return hard_totals[(player_total, int(d))]
+
+
+
+def get_recommendation(player_cards: int, dealer_visible_card: Optional[Card], player_total: int) -> str:
     """
     Get basic strategy recommendation for the player.
     This is a simplified version of blackjack basic strategy.
     """
-    if player_total >= 17:
-        return "stand"
-    elif player_total <= 11:
-        return "hit"
-    elif player_total >= 12 and player_total <= 16:
-        if dealer_visible_card and dealer_visible_card.rank in ['2', '3', '4', '5', '6']:
-            return "stand"
-        else:
-            return "hit"
-    else:
-        return "stand"
+    if player_cards and len(player_cards) == 2 and dealer_visible_card:
+        d = dealer_visible_card.rank
+        p1 = player_cards[0].rank
+        p2 = player_cards[1].rank
+        strategy = get_strategy(d, p1, p2, player_total)
+        return strategy
 
 
 async def analyze_frame_with_gpt4(image_base64: str) -> GameState:
@@ -141,7 +238,7 @@ If you cannot clearly identify any cards, return empty arrays for player_cards a
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-4o-mini",  # Updated to current vision model
             messages=[
                 {
                     "role": "user",
@@ -181,7 +278,7 @@ If you cannot clearly identify any cards, return empty arrays for player_cards a
         # Get recommendation
         recommendation = None
         if player_total and dealer_cards:
-            recommendation = get_recommendation(player_total, dealer_cards[0])
+            recommendation = get_recommendation(player_cards, dealer_cards[0], player_total)
         
         return GameState(
             player_cards=player_cards,

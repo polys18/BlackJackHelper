@@ -1,6 +1,6 @@
 # BlackJackHelper
 
-A mobile app API to identify blackjack hands from video frames using GPT-4 Vision.
+An API endpoint to identify blackjack hands from video frames using OpenAI Vision.
 
 ## Features
 
@@ -133,6 +133,8 @@ if result["success"]:
 
 ## Testing
 
+(The tests currently failed because they were written for the first version but I have updated it snce then. I have to update the tests.)
+
 Run the test suite:
 ```bash
 pytest test_main.py -v
@@ -146,29 +148,28 @@ The API is built with:
 - **Pydantic**: Data validation using Python type annotations
 - **Pillow**: Image processing and validation
 
-## Card Detection
-
-The API uses GPT-4 Vision with a structured prompt to:
-1. Identify all visible cards in the frame
-2. Determine card rank (A, 2-10, J, Q, K) and suit
-3. Provide confidence scores for each detection
-4. Separate player and dealer cards
 
 ## Strategy Recommendations
 
-Basic blackjack strategy is implemented:
-- **17+**: Always stand
-- **11 or less**: Always hit
-- **12-16**: Stand against dealer 2-6, hit against dealer 7-A
+I hardcoded the blackjeck stratergy tables and teh cards that arae read are then used to prompt the strategy dictionries to get the best move.
 
 ## Future Enhancements
 
-- Support for split and double down recommendations
 - Multiple player detection
 - Betting recommendations
 - Hand history tracking
 - Real-time video stream processing
 
-## License
 
-MIT
+## AI/LLM tool integration
+
+- I used copilot to get the first simple version
+- OpenAI for card classification
+- Cursor for writing other code
+
+## Some screenshots 
+
+![Alt text]("Screenshot 2025-11-04 at 7.11.22 PM.png")
+![Alt text]("Screenshot 2025-11-04 at 7.12.20 PM.png")
+![Alt text]("IMG_3072.jpeg")
+![Alt text]("Screenshot 2025-11-04 at 7.32.50 PM.png")

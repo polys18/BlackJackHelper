@@ -45,7 +45,32 @@ Or using uvicorn directly:
 uvicorn main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+The API will be available at `http://localhost:8000` on your machine.
+
+### Accessing from Other Devices
+
+The server binds to `0.0.0.0` (all network interfaces), so it's accessible from other devices on your network:
+
+1. Find your computer's IP address:
+```bash
+# Linux/Mac
+hostname -I | awk '{print $1}'
+
+# Or manually check with:
+ip addr show  # Linux
+ifconfig      # Mac
+```
+
+2. Access from other devices using: `http://<YOUR_IP_ADDRESS>:8000`
+   - Example: `http://192.168.1.100:8000`
+
+3. Make sure your firewall allows port 8000:
+```bash
+# Linux (using ufw)
+sudo ufw allow 8000
+
+# Check firewall settings on Mac/Windows
+```
 
 ## API Documentation
 

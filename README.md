@@ -204,7 +204,7 @@ I hardcoded the blackjeck stratergy tables and the cards that are read, are then
 
 ### Post Alpha Release:
 
-- Assembled an Arduino Nano with ESP-32 Cam circuit that sends the post requests to the server. I uploaded the Arduino files to the repo.
+- Assembled an Arduino Nano with ESP-32 Cam circuit that sends the post requests to the server. I uploaded the Arduino files to the repo. I used chat gpt and oline tutorials a lot for this since I am not very familiar with arduino engineering. 
 - Added card counting functionality to keep a running count between frames. 2-6 is +1, 7-9 is +0, 10 J Q K A is -1.
   
 

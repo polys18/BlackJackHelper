@@ -156,14 +156,6 @@ if result["success"]:
     print(f"Recommendation: {game_state['recommendation']}")
 ```
 
-## Testing
-
-(The tests currently fail because they were written for the first version but I have updated it snce then. I have to update the tests.)
-
-Run the test suite:
-```bash
-pytest test_main.py -v
-```
 
 ## Architecture
 
